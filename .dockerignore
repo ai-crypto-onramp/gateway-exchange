@@ -1,0 +1,20 @@
+# Build artifacts
+bin/
+*.exe
+vendor/
+coverage.out
+*.testcoverage.out
+/exchange-connectors
+
+# Env & secrets
+.env
+*.log
+
+# Git & metadata
+.git/
+.gitignore
+.github/
+README.md
+
+# OS noise
+.DS_Store
