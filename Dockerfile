@@ -7,7 +7,7 @@ RUN --mount=type=cache,target=/go/pkg/mod \
 COPY . .
 RUN --mount=type=cache,target=/go/pkg/mod \
     --mount=type=cache,target=/root/.cache/go-build \
-    CGO_ENABLED=0 GOOS=linux go build -o /server ./cmd/exchange-connector
+    CGO_ENABLED=0 GOOS=linux go build -o /server ./cmd/gateway-exchange
 
 FROM alpine:3.20
 RUN apk add --no-cache wget

@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ai-crypto-onramp/exchange-connector/internal/metrics"
-	"github.com/ai-crypto-onramp/exchange-connector/internal/venue"
-	"github.com/ai-crypto-onramp/exchange-connector/internal/ws"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/metrics"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/venue"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/ws"
 	"github.com/shopspring/decimal"
 )
 

@@ -6,7 +6,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ai-crypto-onramp/exchange-connector/internal/metrics"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/metrics"
 )
 
 var ErrBudgetExhausted = errors.New("ratelimit: weight budget exhausted")

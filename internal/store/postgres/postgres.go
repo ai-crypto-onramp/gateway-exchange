@@ -10,8 +10,8 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/shopspring/decimal"
 
-	"github.com/ai-crypto-onramp/exchange-connector/internal/store"
-	"github.com/ai-crypto-onramp/exchange-connector/internal/store/migrations"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/store"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/store/migrations"
 )
 
 type DB struct {

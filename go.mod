@@ -1,4 +1,4 @@
-module github.com/ai-crypto-onramp/exchange-connector
+module github.com/ai-crypto-onramp/gateway-exchange
 
 go 1.25.0
 

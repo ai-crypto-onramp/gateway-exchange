@@ -18,8 +18,8 @@ import (
 	"sync/atomic"
 	"time"
 
-	"github.com/ai-crypto-onramp/exchange-connector/internal/ratelimit"
-	"github.com/ai-crypto-onramp/exchange-connector/internal/venue"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/ratelimit"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/venue"
 	"github.com/shopspring/decimal"
 )
 
