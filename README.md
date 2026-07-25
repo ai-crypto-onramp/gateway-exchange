@@ -1,7 +1,7 @@
 # Exchange Connectors
 
-![CI](https://github.com/ai-crypto-onramp/exchange-connectors/actions/workflows/ci.yml/badge.svg)
-[![codecov](https://codecov.io/gh/ai-crypto-onramp/exchange-connectors/branch/main/graph/badge.svg)](https://codecov.io/gh/ai-crypto-onramp/exchange-connectors)
+![CI](https://github.com/ai-crypto-onramp/exchange-connector/actions/workflows/ci.yml/badge.svg)
+[![codecov](https://codecov.io/gh/ai-crypto-onramp/exchange-connector/branch/main/graph/badge.svg)](https://codecov.io/gh/ai-crypto-onramp/exchange-connector)
 
 Venue-specific adapters (Binance, Kraken, OTC desks) — order placement, fills, and balances for the crypto on-ramp.
 

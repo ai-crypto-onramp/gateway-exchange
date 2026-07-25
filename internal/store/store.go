@@ -4,7 +4,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/venue"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/venue"
 	"github.com/shopspring/decimal"
 )
 

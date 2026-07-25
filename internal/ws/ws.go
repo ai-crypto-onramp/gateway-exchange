@@ -10,7 +10,7 @@ import (
 	"sync"
 	"time"
 
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/metrics"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/metrics"
 	"github.com/gorilla/websocket"
 )
 

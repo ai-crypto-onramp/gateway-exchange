@@ -8,11 +8,11 @@ import (
 	"strings"
 	"time"
 
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/audit"
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/book"
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/events"
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/store"
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/venue"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/audit"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/book"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/events"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/store"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/venue"
 	"github.com/shopspring/decimal"
 )
 

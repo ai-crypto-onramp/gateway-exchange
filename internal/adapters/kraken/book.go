@@ -6,9 +6,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/metrics"
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/venue"
-	"github.com/ai-crypto-onramp/exchange-connectors/internal/ws"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/metrics"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/venue"
+	"github.com/ai-crypto-onramp/exchange-connector/internal/ws"
 	"github.com/shopspring/decimal"
 )
 
