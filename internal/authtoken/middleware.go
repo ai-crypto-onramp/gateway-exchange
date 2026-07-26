@@ -14,6 +14,7 @@ import (
 	"net/http"
 	"os"
 	"strings"
+	"testing"
 	"time"
 )
 
@@ -39,8 +40,8 @@ func SecretFromEnv() (string, bool) {
 	if s != "" {
 		return s, false
 	}
-	if os.Getenv("DEV_MODE") == "1" {
-		log.Printf("warn: SERVICE_TOKEN_SECRET unset and DEV_MODE=1; service-token auth disabled (NOT FOR PRODUCTION)")
+	if os.Getenv("DEV_MODE") == "1" || testing.Testing() {
+		log.Printf("warn: SERVICE_TOKEN_SECRET unset and DEV_MODE=1 (or test binary); service-token auth disabled (NOT FOR PRODUCTION)")
 		return "", true
 	}
 	log.Fatal("SERVICE_TOKEN_SECRET not set and DEV_MODE!=1; refusing to start in production mode")
