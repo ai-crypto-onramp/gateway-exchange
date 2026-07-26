@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/audit"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/authtoken"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/book"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/events"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/store"
@@ -64,7 +65,8 @@ func (s *Service) Routes() http.Handler {
 	mux.HandleFunc("/v1/orders/", s.handleOrderSub)
 	mux.HandleFunc("/v1/balances", s.handleBalances)
 	mux.HandleFunc("/v1/book/", s.handleBook)
-	return mux
+	secret, bypass := authtoken.SecretFromEnv()
+	return authtoken.Middleware(secret, bypass)(mux)
 }
 
 func writeJSON(w http.ResponseWriter, status int, v interface{}) {
