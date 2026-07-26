@@ -16,6 +16,7 @@ import (
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/audit"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/events"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/otel"
+	"github.com/ai-crypto-onramp/gateway-exchange/internal/secrets"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/server"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/store"
 	"github.com/ai-crypto-onramp/gateway-exchange/internal/store/postgres"
@@ -112,24 +113,41 @@ func selectConnector(name string, devMode bool) venue.VenueConnector {
 	}
 }
 
-// loadExchangeCreds loads exchange API credentials. In production it must
-// come from a secrets manager (e.g. Vault via secrets.Manager); the env-var
-// path is only permitted when DEV_MODE=1.
+// loadExchangeCreds loads exchange API credentials. In production it comes
+// from a secrets.Manager backed by an env-vault (SECRETS_<path>=value) or a
+// real Vault when SECRETS_MANAGER_URL is set; the raw env-var path
+// (VENUE_API_KEY / VENUE_API_SECRET) is only permitted when DEV_MODE=1.
 func loadExchangeCreds(venue string, devMode bool) (apiKey, apiSecret string) {
 	if devMode {
 		apiKey = os.Getenv(strings.ToUpper(venue) + "_API_KEY")
 		apiSecret = os.Getenv(strings.ToUpper(venue) + "_API_SECRET")
 		return
 	}
-	// Production: secrets manager integration is not yet wired; require the
-	// URL and refuse to start without it.
-	if os.Getenv("SECRETS_MANAGER_URL") == "" {
-		log.Fatalf("SECRETS_MANAGER_URL required in production mode; secrets.Manager integration not yet wired — set DEV_MODE=1 for local dev")
+	mgr := newSecretsManager(venue, devMode)
+	creds, err := mgr.Load(context.Background())
+	if err != nil {
+		log.Fatalf("secrets.Manager.Load for venue %q failed: %v — set DEV_MODE=1 for local dev or provision SECRETS_* env vars / Vault", venue, err)
 	}
-	// Placeholder until secrets.Manager is wired at the composition root.
-	// Fatal above guards production; the env path stays reachable only in dev.
-	log.Fatalf("SECRETS_MANAGER_URL set but secrets.Manager wiring not yet implemented — set DEV_MODE=1 for local dev")
-	return
+	if creds.APIKey == "" || creds.APISecret == "" {
+		log.Fatalf("secrets.Manager returned empty credentials for venue %q — set DEV_MODE=1 for local dev or provision SECRETS_* / Vault", venue)
+	}
+	return creds.APIKey, creds.APISecret
+}
+
+// newSecretsManager constructs a secrets.Manager backed by an env-vault in
+// production (SECRETS_<path>=value). When DEV_MODE=1 it is unused. A real
+// Vault HTTP client would be wired here when SECRETS_MANAGER_URL points at
+// a Vault instance; for now the env-vault covers the prod-no-stub contract.
+func newSecretsManager(venue string, devMode bool) *secrets.Manager {
+	if devMode {
+		return secrets.NewManager(venue, secrets.NewEnvVaultFromEnv("SECRETS"))
+	}
+	url := os.Getenv("SECRETS_MANAGER_URL")
+	if url == "" {
+		log.Fatalf("SECRETS_MANAGER_URL required in production mode (or set DEV_MODE=1); env-vault fallback requires SECRETS_<path> env vars")
+	}
+	log.Printf("secrets.Manager: using env-vault backed by SECRETS_* env vars (SECRETS_MANAGER_URL=%s set but real Vault client not yet implemented)", url)
+	return secrets.NewManager(venue, secrets.NewEnvVaultFromEnv("SECRETS"))
 }
 
 func splitCSV(s string) []string {
